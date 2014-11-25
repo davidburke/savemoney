@@ -1,0 +1,25 @@
+<html>
+
+
+<body>
+Hi {{ user }}! <BR><BR>
+Enter amount saved:<BR>
+
+<form action="{% url 'save-submit-form' %}" method='POST'>
+{% csrf_token %}
+<input type='text' name='txt_value'><input name='btn_save' type="submit" value="save">
+</form>
+
+<HR>
+
+<BR><BR>
+Current Amount Saved: {{ result }}<BR><BR>
+Total Amount Saved: <BR><BR>
+
+<form action="{% url 'show-history-form' %}" method='POST'>
+{% csrf_token %}
+<input name='btn_showhistory' type="submit" value="Show Savings History">
+</form>
+
+</body>
+</html>
