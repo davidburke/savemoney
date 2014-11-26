@@ -14,12 +14,17 @@ Enter amount saved:<BR>
 
 <BR><BR>
 Current Amount Saved: {{ result }}<BR><BR>
-Total Amount Saved: <BR><BR>
+Total Amount Saved: {{ total|floatformat:2 }}<BR><BR>
+Total Amount Saved: {{ total_entries.total|floatformat:2 }}<BR><BR>
+Avg Amount Saved: {{ total_entries.average|floatformat:2 }}<BR><BR>
 
 <form action="{% url 'show-history-form' %}" method='POST'>
 {% csrf_token %}
 <input name='btn_showhistory' type="submit" value="Show Savings History">
 </form>
-
+<HR>
+{% for e in entries %}
+    {{ e.id }} - {{ e.amount }} - {{ e.date|date:"m/d/y h:i" }}<BR>
+{% endfor %}
 </body>
 </html>
