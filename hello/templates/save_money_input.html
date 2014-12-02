@@ -16,7 +16,7 @@ Howdy {{ user }}! <BR><BR>
 Enter amount saved:<BR>
 
 <form action="{% url 'save-submit-form' %}" method='POST'>
-{% csrf_token %}
+    {% csrf_token %}
 
     <input type='text' name='txt_value' class="input"><BR><BR>
     <input type = "submit" name='btn_save' value="save" class="btn btn-success">
@@ -24,11 +24,10 @@ Enter amount saved:<BR>
 
 <HR>
 Current Amount Saved: {{ result }}<BR>
-Total Amount Saved: {{ total|floatformat:2 }}<BR>
-<!-- Total Amount Saved: {{ total_entries.total|floatformat:2 }}<BR> -->
+Total Amount Saved: {{ total_entries.total|floatformat:2 }}<BR>
 Avg Amount Saved: {{ total_entries.average|floatformat:2 }}<BR><BR>
 
-<a href="{% url 'show-history-form' %}" class="btn btn-warning">Show History</a><BR><BR>
+<a href="{% url 'show-history-form' %}" class="btn btn-warning">Show Full History</a><BR><BR>
 
 
 <HR>

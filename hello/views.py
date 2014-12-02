@@ -23,11 +23,20 @@ def db(request):
 
 def Home(request):
 
+	entries = Entry.objects.all().order_by('-date', 'amount')
+	total_entries = Entry.objects.aggregate(total=Sum('amount'), average=Avg('amount'))
 
-	return render(request, 'save_money_input.html')
+	context = {
+		'entries': entries,
+		'total_entries': total_entries,
+		'user': "David Burke" # request.user.first_name
+	}
+
+	return render(request, 'save_money_input.html', context)
 
 
 def SaveMoneyForm(request):
+
 
 	print request.POST
 	text_box = request.POST['txt_value']
@@ -43,17 +52,20 @@ def SaveMoneyForm(request):
 def ShowHistory(request):
 
 	entries = Entry.objects.all().order_by('-date', 'amount')
-	# redundant	total_entries = Entry.objects.aggregate(total=Sum('amount'), average=Avg('amount'))
+	total_entries = Entry.objects.aggregate(total=Sum('amount'), average=Avg('amount'))
 
 
+	"""
+	# redundant total
 	total = 0
 	for e in entries:
 		total += e.amount
-
+	"""
 	context = {
 		'entries': entries,
-		'total': total,
-		# 'total_entries': total_entries,
+		# redundant
+		# 'total': total,
+		'total_entries': total_entries,
 		'user': "david burke" # request.user.first_name
 	}
 

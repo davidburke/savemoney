@@ -10,12 +10,36 @@
 
 <body>
 
-{% for e in entries %}
-    <a href="#" class="saveamount" data-type="text" data-pk="{{ e.id }}" data-url="{% url 'process-update' %}" data-title="Edit Amount">{{ e.amount }}</a>
-     - {{ e.date|date:"m/d/y h:i" }} <BR>
-{% endfor %}
+<div class="container-fluid">
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Saved Amount</th>
+            <th>Saved Date</th>
+        </tr>
+    </thead>
+
+            {% for e in entries %}
+                <tr>
+                <td>
+                <a href="#" class="saveamount" data-type="text" data-pk="{{ e.id }}" data-url="{% url 'process-update' %}" data-title="Edit Amount">{{ e.amount }}</a>
+                </td>
+                <td>
+                    {{ e.date|date:"m/d/y h:i" }} <BR>
+                </td>
+                </tr>
+            {% endfor %}
+
+
+</table>
 
 <div style="margin-bottom:20px"></div>
+
+<a href="{% url 'savemoney-home' %}" class="btn btn-warning">Return to Saving</a>
+
+</div>
+
 
 <script>
     $.fn.editable.defaults.mode = 'inline';
@@ -23,8 +47,5 @@
         $('.saveamount').editable();
     });
 </script>
-<BR>
-<BR>
-
-<a href="{% url 'savemoney-home' %}" class="btn btn-warning">Return to Saving</a>
-<BR><BR>
+</body>
+</html>
