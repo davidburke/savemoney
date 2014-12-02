@@ -5,11 +5,11 @@ from django.core.urlresolvers import reverse
 from decimal import Decimal
 from django.db.models import Count, Min, Sum, Avg
 from .models import Greeting, Entry
-
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
-	return HttpResponse('Hello from Python!')
+	return HttpResponse('Got any grapes?')
 
 
 def db(request):
@@ -23,24 +23,12 @@ def db(request):
 
 def Home(request):
 
-	entries = Entry.objects.all().order_by('-date', 'amount')
-	total_entries = Entry.objects.aggregate(total=Sum('amount'), average=Avg('amount'))
 
-
-	total = 0
-	for e in entries:
-		total += e.amount
-
-	context = {
-		'entries': entries,
-		'total': total,
-		'total_entries': total_entries,
-		'user': "david burke" # request.user.first_name
-	}
-	return render(request, 'save_money_input.html', context)
+	return render(request, 'save_money_input.html')
 
 
 def SaveMoneyForm(request):
+
 	print request.POST
 	text_box = request.POST['txt_value']
 	reason = 'None Provided'
@@ -51,8 +39,38 @@ def SaveMoneyForm(request):
 
 	return HttpResponseRedirect(reverse('savemoney-home'))
 
+
 def ShowHistory(request):
-	return HttpResponse("Savings History:")
+
+	entries = Entry.objects.all().order_by('-date', 'amount')
+	# redundant	total_entries = Entry.objects.aggregate(total=Sum('amount'), average=Avg('amount'))
+
+
+	total = 0
+	for e in entries:
+		total += e.amount
+
+	context = {
+		'entries': entries,
+		'total': total,
+		# 'total_entries': total_entries,
+		'user': "david burke" # request.user.first_name
+	}
+
+	return render(request, 'show_history.html', context)
+
+@csrf_exempt
+def ProcessUpdate(request):
+
+	print 'did this do something'
+	print request.POST
+	row_pk = request.POST['pk']
+	row_value = request.POST['value']
+
+	Entry.objects.filter(pk=row_pk).update(amount=row_value)
+
+	print Entry.objects.get(pk=row_pk)
+	return HttpResponse('Test')
 
 
 def add_numbers(a, b):

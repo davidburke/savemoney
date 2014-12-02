@@ -16,5 +16,6 @@ urlpatterns = patterns('',
     url(r'^$', 'hello.views.Home', name='savemoney-home'),
     url(r'^save/$', 'hello.views.SaveMoneyForm', name='save-submit-form'),
     url(r'^savehistory/$', 'hello.views.ShowHistory', name='show-history-form'),
+    url(r'^processupdate/$', 'hello.views.ProcessUpdate', name='process-update'),
 
 )

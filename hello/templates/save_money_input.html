@@ -1,30 +1,38 @@
 <html>
 
+<head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
+
+</head>
 
 <body>
-Hi {{ user }}! <BR><BR>
+
+Howdy {{ user }}! <BR><BR>
 Enter amount saved:<BR>
 
 <form action="{% url 'save-submit-form' %}" method='POST'>
 {% csrf_token %}
-<input type='text' name='txt_value'><input name='btn_save' type="submit" value="save">
+
+    <input type='text' name='txt_value' class="input"><BR><BR>
+    <input type = "submit" name='btn_save' value="save" class="btn btn-success">
 </form>
 
 <HR>
-
-<BR><BR>
-Current Amount Saved: {{ result }}<BR><BR>
-Total Amount Saved: {{ total|floatformat:2 }}<BR><BR>
-Total Amount Saved: {{ total_entries.total|floatformat:2 }}<BR><BR>
+Current Amount Saved: {{ result }}<BR>
+Total Amount Saved: {{ total|floatformat:2 }}<BR>
+<!-- Total Amount Saved: {{ total_entries.total|floatformat:2 }}<BR> -->
 Avg Amount Saved: {{ total_entries.average|floatformat:2 }}<BR><BR>
 
-<form action="{% url 'show-history-form' %}" method='POST'>
-{% csrf_token %}
-<input name='btn_showhistory' type="submit" value="Show Savings History">
-</form>
+<a href="{% url 'show-history-form' %}" class="btn btn-warning">Show History</a><BR><BR>
+
+
 <HR>
-{% for e in entries %}
-    {{ e.id }} - {{ e.amount }} - {{ e.date|date:"m/d/y h:i" }}<BR>
-{% endfor %}
+<BR>
+
 </body>
 </html>
