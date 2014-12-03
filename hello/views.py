@@ -6,8 +6,10 @@ from decimal import Decimal
 from django.db.models import Count, Min, Sum, Avg
 from .models import Greeting, Entry
 from django.views.decorators.csrf import csrf_exempt
+# from datetime import datetime
+# from django.contrib.auth.models import user
 
-# Create your views here.
+
 def index(request):
 	return HttpResponse('Got any grapes?')
 
@@ -74,7 +76,6 @@ def ShowHistory(request):
 @csrf_exempt
 def ProcessUpdate(request):
 
-	print 'did this do something'
 	print request.POST
 	row_pk = request.POST['pk']
 	row_value = request.POST['value']
@@ -83,6 +84,18 @@ def ProcessUpdate(request):
 
 	print Entry.objects.get(pk=row_pk)
 	return HttpResponse('Test')
+
+
+@csrf_exempt
+def ProcessDelete(request):
+
+
+	row_pk = request.GET['id']
+
+	Entry.objects.filter(pk=row_pk).delete()
+
+	return HttpResponseRedirect(reverse('show-history-form'))
+
 
 
 def add_numbers(a, b):

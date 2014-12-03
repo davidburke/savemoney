@@ -12,20 +12,20 @@
 
 <body>
 
-Howdy {{ user }}! <BR><BR>
-Enter amount saved:<BR>
+<p>Howdy <b>{{ user }}! </b></p>
+<p>Enter amount saved:</p>
 
 <form action="{% url 'save-submit-form' %}" method='POST'>
     {% csrf_token %}
 
     <input type='text' name='txt_value' class="input"><BR><BR>
-    <input type = "submit" name='btn_save' value="save" class="btn btn-success">
+    <input type = "submit" name='btn_save' value="$ave" class="btn btn-success">
 </form>
 
 <HR>
-Current Amount Saved: {{ result }}<BR>
-Total Amount Saved: {{ total_entries.total|floatformat:2 }}<BR>
-Avg Amount Saved: {{ total_entries.average|floatformat:2 }}<BR><BR>
+<p>Current Amount Saved: <b>{{ result }}</b></p>
+<p>Total Amount Saved: <b>{{ total_entries.total|floatformat:2 }}</b></p>
+<p>Avg Amount Saved: <b>{{ total_entries.average|floatformat:2 }}</b></p>
 
 <a href="{% url 'show-history-form' %}" class="btn btn-warning">Show Full History</a><BR><BR>
 
