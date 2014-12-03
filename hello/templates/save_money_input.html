@@ -12,6 +12,8 @@
 
 <body>
 
+<div class="container-fluid">
+
 <p>Howdy <b>{{ user }}! </b></p>
 <p>Enter amount saved:</p>
 
@@ -23,15 +25,51 @@
 </form>
 
 <HR>
-<p>Current Amount Saved: <b>{{ result }}</b></p>
+<!-- <p>Current Amount Saved: <b>{{ result }}</b></p> -->
 <p>Total Amount Saved: <b>{{ total_entries.total|floatformat:2 }}</b></p>
 <p>Avg Amount Saved: <b>{{ total_entries.average|floatformat:2 }}</b></p>
 
-<a href="{% url 'show-history-form' %}" class="btn btn-warning">Show Full History</a><BR><BR>
+
+
+
+<div class="'row">
+<div class="col-md-6">
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th class="col-md-8" style="text-align:center">Saved Amount</th>
+            <th class="col-md-4" style="text-align:center">Saved Date</th>
+
+        </tr>
+    </thead>
+
+    {% for e in entries %}
+                <tr>
+                    <td align="left">
+                        <a href="#" class="saveamount" data-type="text" data-pk="{{ e.id }}" data-url="{% url 'process-update' %}" data-title="Edit Amount">{{ e.amount }}</a>
+                        <a href="{% url 'process-delete' %}?id={{ e.id }}" class="btn btn-danger pull-right">Delete</a>
+                    </td>
+                    <td align="right">
+                        {{ e.date|date:"m/d/y h:i" }} <BR>
+                    </td>
+                    </tr>
+            {% endfor %}
+
+
+</table>
+</div>
+</div>
+
+<a href="{% url 'show-history-form' %}" class="btn btn-warning">Show/Edit History</a><BR><BR>
 
 
 <HR>
 <BR>
-
+<script>
+    $.fn.editable.defaults.mode = 'inline';
+    $(document).ready(function() {
+        $('.saveamount').editable();
+    });
+</script>
 </body>
 </html>

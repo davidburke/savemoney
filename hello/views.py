@@ -25,7 +25,7 @@ def db(request):
 
 def Home(request):
 
-	entries = Entry.objects.all().order_by('-date', 'amount')
+	entries = Entry.objects.order_by('-date', 'amount')[:3]
 	total_entries = Entry.objects.aggregate(total=Sum('amount'), average=Avg('amount'))
 
 	context = {
