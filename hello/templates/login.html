@@ -10,22 +10,35 @@
 </head>
 <body>
 
-<h3>Log in</h3><BR><BR>
-<form action="{% url 'login' %}" method='POST' role="form">
+<div class="container-fluid">
+    <div class="col-md-4">
+
+    <h3>Log in</h3><BR>
+
+    <form action="{% url 'login' %}" method='POST' role="form">
         {% csrf_token %}
-  <div class="form-group">
-    <label for="username">Username</label>
-      <input type="text" size="20" class="form-control" name="username" placeholder="username">
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" class="form-control" name="password" placeholder="Password">
-  </div>
-  <button type="submit" class="btn btn-default">Log In</button>
-</form>
+        <div class="form-group">
+            <label for="username">Email</label>
+            <input type="text" size="20" class="form-control" name="username" placeholder="you know what to do">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" placeholder="lay it on me">
+        </div>
+
+        <button type="submit" class="btn btn-success">Let's Do This!</button>
+    </form>
 <BR>
-<div>
-<a href="{% url 'register' %}">Register</a>
+
+        <div class=""col-md-4">
+            <h6>new user? want an account? or maybe a treat?</h6>
+            <a href="{% url 'register' %}"><h4>Register!</h4></a>
+        </div>
+
+    </div>
+
+
 </div>
+
 </body>
 </html>
