@@ -22,4 +22,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'hello.views.LogoutUser', name='logout'),
     url(r'^accounts/login/$', 'hello.views.Login', name='login'),
     url(r'^register/$', 'hello.views.Register', name='register'),
+    url(r'^goals/$', 'hello.views.Goals', name='goals'),
+    url(r'^contact/$', 'hello.views.Contact', name='contact'),
+    url(r'^account/$', 'hello.views.Account', name='account'),
 )

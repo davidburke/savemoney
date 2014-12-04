@@ -6,8 +6,6 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-
-
 </head>
 
 <body>
@@ -28,14 +26,14 @@
           <a href="{% url 'show-history-form' %}">History</a>
         </li>
         <li class="active">
-          <a href="{% url 'show-history-form' %}">Goals</a>
+          <a href="{% url 'goals' %}">Goals</a>
         </li>
         <li>
-          <a href="{% url 'show-history-form' %}">My Account</a>
+          <a href="{% url 'account' %}">My Account</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'show-history-form' %}">Contact Us</a></li>
+        <li><a href="{% url 'contact' %}">Contact Us</a></li>
         <li><a href="{% url 'logout' %}">Log Out</a></li>
       </ul>
     </nav>
@@ -44,8 +42,9 @@
 
 <div class="container-fluid">
 
-<p>Howdy <b>{{ user }}! </b></p>
-<p>Enter amount saved:</p>
+    <div class="col-md-8">
+    <p>Howdy <b>{{ user }}! </b></p>
+    <p>Enter the $ amount you saved:</p>
 
 <form action="{% url 'save-submit-form' %}" method='POST'>
     {% csrf_token %}
@@ -57,9 +56,13 @@
 <HR>
 <!-- <p>Current Amount Saved: <b>{{ result }}</b></p> -->
 <p>Total Amount Saved: <b>{{ total_entries.total|floatformat:2 }}</b></p>
-<p>Avg Amount Saved: <b>{{ total_entries.average|floatformat:2 }}</b></p>
+<p>Avg Amount Saved: <b>{{ total_entries.average|floatformat:2 }}</b>
+    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+    <a href="{% url 'show-history-form' %}" class="btn btn-warning">Full History</a><BR><BR></p>
 
-
+    </div>
 
 
 <div class="'row">
@@ -67,7 +70,7 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th class="col-md-8" style="text-align:center">Saved Amount</th>
+            <th class="col-md-8" style="text-align:center">Recent Savings</th>
             <th class="col-md-4" style="text-align:center">Saved Date</th>
 
         </tr>
@@ -90,10 +93,6 @@
 </div>
 </div>
 
-<a href="{% url 'show-history-form' %}" class="btn btn-warning">Full History</a><BR><BR>
-
-
-<HR>
 <BR>
 <script>
     $.fn.editable.defaults.mode = 'inline';

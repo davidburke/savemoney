@@ -136,6 +136,12 @@ def add_numbers(a, b):
 	return a+b
 
 
+def Goals(request):
+	return render(request, 'goals.html')
 
 
+def Contact(request):
+	return render(request, 'contact.html')
 
+def Account(request):
+	return render(request, 'account.html')
