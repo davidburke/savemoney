@@ -47,10 +47,10 @@ def Login(request):
 		return render(request, 'login.html')
 
 
-def Logout(request):
+def LogoutUser(request):
 
 	logout(request)
-	return HttpResponseRedirect(reverse('savemoney-home'))
+	return render(request,'logout.html')
 
 
 def Register(request):

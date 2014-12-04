@@ -14,7 +14,7 @@
 <div class="container-fluid">
 <div
 <div class="col-md-5">
-<h3>Register</h3><BR>
+<h3>Register and Start Saving</h3><BR>
 
 <form action="{% url 'register' %}" method='POST' role="form">
         {% csrf_token %}
@@ -24,7 +24,7 @@
   </div>
   <div class="form-group">
     <label for="password">Password</label>
-    <input type="password" class="form-control" name="password" placeholder="something clever ya won't forget. ever. never. forever.">
+    <input type="password" class="form-control" name="password" placeholder="something clever you won't forget. ever. never. forever.">
   </div>
 
   <button type="submit" class="btn btn-success" padding="25px">'Save' Me</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn btn-info">Give Me A Treat First</button>
