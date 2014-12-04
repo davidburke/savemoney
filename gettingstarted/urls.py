@@ -18,6 +18,8 @@ urlpatterns = patterns('',
     url(r'^savehistory/$', 'hello.views.ShowHistory', name='show-history-form'),
     url(r'^process_update/$', 'hello.views.ProcessUpdate', name='process-update'),
     url(r'^process_delete/$', 'hello.views.ProcessDelete', name='process-delete'),
-
-
+    url(r'^login/$', 'hello.views.Login', name='login'),
+    url(r'^logout/$', 'hello.views.Logout', name='logout'),
+    url(r'^accounts/login/$', 'hello.views.Login', name='login'),
+    url(r'^register/$', 'hello.views.Register', name='register'),
 )

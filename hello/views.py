@@ -6,8 +6,9 @@ from decimal import Decimal
 from django.db.models import Count, Min, Sum, Avg
 from .models import Greeting, Entry
 from django.views.decorators.csrf import csrf_exempt
-# from datetime import datetime
-# from django.contrib.auth.models import user
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 
 def index(request):
@@ -23,15 +24,50 @@ def db(request):
 	return render(request, 'db.html', {'greetings': greetings})
 
 
+def Login(request):
+
+	if request.method == 'POST':
+
+		# user = User.objects.create_user('dave', 'dave@dave.com', 'password')
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				return HttpResponseRedirect(reverse('show-history-form'))
+			else:
+				print('Disabled Account')
+				return render(request, 'login.html')
+		else:
+			print('Invalid login. Please try again')
+			return render(request, 'login.html')
+	else:
+		return render(request, 'login.html')
+
+
+def Logout(request):
+
+	logout(request)
+	return HttpResponseRedirect(reverse('savemoney-home'))
+
+
+def Register(request):
+
+	return render(request, 'register.html')
+
+@login_required
 def Home(request):
 
-	entries = Entry.objects.order_by('-date', 'amount')[:3]
-	total_entries = Entry.objects.aggregate(total=Sum('amount'), average=Avg('amount'))
+	entries = Entry.objects.filter(user=request.user).order_by('-date', 'amount')[:3]
+
+	total_entries = Entry.objects.filter(user=request.user).aggregate(total=Sum('amount'), average=Avg('amount'))
 
 	context = {
 		'entries': entries,
 		'total_entries': total_entries,
-		'user': "David Burke" # request.user.first_name
+		'user': request.user.username
 	}
 
 	return render(request, 'save_money_input.html', context)
@@ -44,17 +80,18 @@ def SaveMoneyForm(request):
 	text_box = request.POST['txt_value']
 	reason = 'None Provided'
 	newEntry = Entry()
+	newEntry.user = request.user
 	newEntry.amount = Decimal(text_box)
 	newEntry.reason = reason
 	newEntry.save()
 
 	return HttpResponseRedirect(reverse('savemoney-home'))
 
-
+@login_required
 def ShowHistory(request):
 
-	entries = Entry.objects.all().order_by('-date', 'amount')
-	total_entries = Entry.objects.aggregate(total=Sum('amount'), average=Avg('amount'))
+	entries = Entry.objects.filter(user=request.user).order_by('-date', 'amount')
+	total_entries = Entry.objects.filter(user=request.user).aggregate(total=Sum('amount'), average=Avg('amount'))
 
 
 	"""
@@ -65,13 +102,12 @@ def ShowHistory(request):
 	"""
 	context = {
 		'entries': entries,
-		# redundant
-		# 'total': total,
 		'total_entries': total_entries,
-		'user': "david burke" # request.user.first_name
+		'user': request.user.username
 	}
 
 	return render(request, 'show_history.html', context)
+
 
 @csrf_exempt
 def ProcessUpdate(request):
@@ -80,9 +116,8 @@ def ProcessUpdate(request):
 	row_pk = request.POST['pk']
 	row_value = request.POST['value']
 
-	Entry.objects.filter(pk=row_pk).update(amount=row_value)
+	Entry.objects.filter(pk=row_pk, user=request.user).update(amount=row_value)
 
-	print Entry.objects.get(pk=row_pk)
 	return HttpResponse('Test')
 
 
@@ -92,10 +127,9 @@ def ProcessDelete(request):
 
 	row_pk = request.GET['id']
 
-	Entry.objects.filter(pk=row_pk).delete()
+	Entry.objects.filter(pk=row_pk, user=request.user).delete()
 
 	return HttpResponseRedirect(reverse('show-history-form'))
-
 
 
 def add_numbers(a, b):
