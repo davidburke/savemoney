@@ -36,7 +36,7 @@ def Login(request):
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-				return HttpResponseRedirect(reverse('show-history-form'))
+				return HttpResponseRedirect(reverse('savemoney-home'))
 			else:
 				print('Disabled Account')
 				return render(request, 'login.html')
@@ -55,7 +55,19 @@ def LogoutUser(request):
 
 def Register(request):
 
-	return render(request, 'register.html')
+	if request.method == 'POST':
+		name = ' '
+		un = request.POST['username']
+		pw = request.POST['password']
+		User.objects.create_user(un, un, pw)
+
+		user = authenticate(username=un, password=pw)
+		login(request, user)
+		return HttpResponseRedirect(reverse('savemoney-home'))
+
+	else:
+		return render(request, 'register.html')
+
 
 @login_required
 def Home(request):
@@ -86,6 +98,7 @@ def SaveMoneyForm(request):
 	newEntry.save()
 
 	return HttpResponseRedirect(reverse('savemoney-home'))
+
 
 @login_required
 def ShowHistory(request):

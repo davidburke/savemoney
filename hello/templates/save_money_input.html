@@ -40,7 +40,6 @@
   </div>
 
 
-<div class="container-fluid">
 
     <div class="col-md-8">
     <p>Howdy <b>{{ user }}! </b></p>
@@ -56,11 +55,7 @@
 <HR>
 <!-- <p>Current Amount Saved: <b>{{ result }}</b></p> -->
 <p>Total Amount Saved: <b>{{ total_entries.total|floatformat:2 }}</b></p>
-<p>Avg Amount Saved: <b>{{ total_entries.average|floatformat:2 }}</b>
-    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-    <a href="{% url 'show-history-form' %}" class="btn btn-warning">Full History</a><BR><BR></p>
+<p>Avg Amount Saved: <b>{{ total_entries.average|floatformat:2 }}</b></p>
 
     </div>
 
@@ -92,8 +87,8 @@
 </table>
 </div>
 </div>
-
 <BR>
+</div>
 <script>
     $.fn.editable.defaults.mode = 'inline';
     $(document).ready(function() {
